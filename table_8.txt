@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS t_produit;
+
+CREATE TABLE t_produit (
+    produit_id INTEGER PRIMARY KEY,
+    type ENUM('pizza', 'topping', 'boisson', 'dessert') NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    prix DECIMAL(10,2) NOT NULL,
+    TVA DECIMAL(4,2) NOT NULL,
+    actif TINYINT(1) NOT NULL DEFAULT 1,
+
+    -- Index utile pour les recherches par type ou nom
+    INDEX idx_type (type),
+    INDEX idx_nom (nom)
+);
