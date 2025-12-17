@@ -1,0 +1,8 @@
+CREATE TABLE t_commande (
+    commande_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    client_fk INTEGER NOT NULL,
+    type ENUM('sur_place', 'emporter', 'livraison') NOT NULL,
+    adresse_fk INTEGER NULL,
+    date_heure DATETIME NOT NULL,
+    statut ENUM('livrée', 'annulée') NOT NULL DEFAULT 'livrée'
+);
