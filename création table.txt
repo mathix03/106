@@ -1,17 +1,17 @@
 CREATE TABLE t_client(
    client_id INT,
-   nom VARCHAR(50) NOT NULL,
-   prenom VARCHAR(50) NOT NULL,
-   email VARCHAR(100) NOT NULL,
-   telephone VARCHAR(20) NOT NULL,
+   nom VARCHAR(50)  NOT NULL,
+   prenom VARCHAR(50)  NOT NULL,
+   email VARCHAR(100)  NOT NULL,
+   telephone VARCHAR(20)  NOT NULL,
    PRIMARY KEY(client_id)
 );
 
 CREATE TABLE t_adresse(
    adresse_id INT,
-   rue VARCHAR(255) NOT NULL,
-   NPA VARCHAR(10) NOT NULL,
-   localite VARCHAR(50) NOT NULL,
+   rue VARCHAR(255)  NOT NULL,
+   NPA VARCHAR(10)  NOT NULL,
+   localite VARCHAR(50)  NOT NULL,
    client_fk INT NOT NULL,
    PRIMARY KEY(adresse_id),
    FOREIGN KEY(client_fk) REFERENCES t_client(client_id)
@@ -19,11 +19,11 @@ CREATE TABLE t_adresse(
 
 CREATE TABLE t_produit(
    produit_id INT,
-   nom VARCHAR(50) NOT NULL,
-   type VARCHAR(50) NOT NULL,
-   prix DECIMAL(5,2) NOT NULL,
-   TVA DECIMAL(5,2) NOT NULL,
-   actif LOGICAL NOT NULL,
+   nom VARCHAR(50)  NOT NULL,
+   type VARCHAR(50)  NOT NULL,
+   prix DECIMAL(5,2)   NOT NULL,
+   TVA DECIMAL(5,2)   NOT NULL,
+   actif BOOLEAN NOT NULL,
    parent_ligne_fk INT NOT NULL,
    PRIMARY KEY(produit_id),
    FOREIGN KEY(parent_ligne_fk) REFERENCES t_produit(produit_id)
@@ -32,8 +32,8 @@ CREATE TABLE t_produit(
 CREATE TABLE t_commande(
    commande_id INT,
    date_heure DATETIME NOT NULL,
-   type VARCHAR(50) NOT NULL,
-   statut VARCHAR(50) NOT NULL,
+   type VARCHAR(50)  NOT NULL,
+   statut VARCHAR(50)  NOT NULL,
    adresse_fk INT,
    client_fk INT NOT NULL,
    PRIMARY KEY(commande_id),
@@ -44,7 +44,7 @@ CREATE TABLE t_commande(
 CREATE TABLE t_ligne_commande(
    ligne_commande_id INT,
    quantite INT NOT NULL,
-   prix_unitaire_facture DECIMAL(5,2) NOT NULL,
+   prix_unitaire_facture DECIMAL(5,2)   NOT NULL,
    produit_fk INT NOT NULL,
    commande_fk INT NOT NULL,
    PRIMARY KEY(ligne_commande_id),
@@ -54,27 +54,27 @@ CREATE TABLE t_ligne_commande(
 
 CREATE TABLE t_paiement(
    paiement_id INT,
-   mode VARCHAR(50) NOT NULL,
-   montant DECIMAL(5,2) NOT NULL,
+   mode VARCHAR(50)  NOT NULL,
+   montant DECIMAL(5,2)   NOT NULL,
    commande_fk INT NOT NULL,
    PRIMARY KEY(paiement_id),
    FOREIGN KEY(commande_fk) REFERENCES t_commande(commande_id)
 );
 
 CREATE TABLE t_livreur(
-   livreur_id VARCHAR(50),
-   code VARCHAR(50) NOT NULL,
-   nom VARCHAR(50) NOT NULL,
-   actif LOGICAL NOT NULL,
+   livreur_id VARCHAR(50) ,
+   code VARCHAR(50)  NOT NULL,
+   nom VARCHAR(50)  NOT NULL,
+   actif BOOLEAN NOT NULL,
    PRIMARY KEY(livreur_id)
 );
 
 CREATE TABLE t_livraison(
    livraison_id INT,
-   statut VARCHAR(50) NOT NULL,
+   statut VARCHAR(50)  NOT NULL,
    heure_depart DATETIME NOT NULL,
    heure_arrivee DATETIME NOT NULL,
-   livreur_fk VARCHAR(50) NOT NULL,
+   livreur_fk VARCHAR(50)  NOT NULL,
    commande_fk INT NOT NULL,
    PRIMARY KEY(livraison_id),
    UNIQUE(commande_fk),
