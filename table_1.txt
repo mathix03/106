@@ -1,9 +1,0 @@
-DROP TABLE IF EXISTS t_adresse;
-
-CREATE TABLE t_adresse (
-    adresse_id INTEGER PRIMARY KEY,
-    client_fk INTEGER NOT NULL,
-    rue VARCHAR(255) NOT NULL,
-    NPA INTEGER NOT NULL,
-    localite VARCHAR(255) NOT NULL
-);
