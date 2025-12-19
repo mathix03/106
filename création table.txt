@@ -19,8 +19,8 @@ CREATE TABLE t_adresse(
 
 CREATE TABLE t_produit(
    produit_id INT,
-   type VARCHAR(50) NOT NULL,
    nom VARCHAR(50) NOT NULL,
+   type VARCHAR(50) NOT NULL,
    prix DECIMAL(5,2) NOT NULL,
    TVA DECIMAL(5,2) NOT NULL,
    actif LOGICAL NOT NULL,
@@ -31,8 +31,8 @@ CREATE TABLE t_produit(
 
 CREATE TABLE t_commande(
    commande_id INT,
-   type VARCHAR(50) NOT NULL,
    date_heure DATETIME NOT NULL,
+   type VARCHAR(50) NOT NULL,
    statut VARCHAR(50) NOT NULL,
    adresse_fk INT,
    client_fk INT NOT NULL,
@@ -56,7 +56,6 @@ CREATE TABLE t_paiement(
    paiement_id INT,
    mode VARCHAR(50) NOT NULL,
    montant DECIMAL(5,2) NOT NULL,
-   date_paiement VARCHAR(50) NOT NULL,
    commande_fk INT NOT NULL,
    PRIMARY KEY(paiement_id),
    FOREIGN KEY(commande_fk) REFERENCES t_commande(commande_id)
@@ -72,9 +71,9 @@ CREATE TABLE t_livreur(
 
 CREATE TABLE t_livraison(
    livraison_id INT,
-   statut VARCHAR(50),
-   heure_depart DATETIME,
-   heure_arrivee DATETIME,
+   statut VARCHAR(50) NOT NULL,
+   heure_depart DATETIME NOT NULL,
+   heure_arrivee DATETIME NOT NULL,
    livreur_fk VARCHAR(50) NOT NULL,
    commande_fk INT NOT NULL,
    PRIMARY KEY(livraison_id),
