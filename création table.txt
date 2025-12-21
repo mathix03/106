@@ -1,120 +1,78 @@
 CREATE TABLE t_client (
-   client_id INT,
-   nom VARCHAR(50) NOT NULL,
-   prenom VARCHAR(50) NOT NULL,
-   email VARCHAR(255) NOT NULL,
-   telephone VARCHAR(20) NOT NULL,
-   PRIMARY KEY(client_id)
+    client_id INT PRIMARY KEY NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    telephone VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE t_adresse(
-   adresse_id INT,
-   rue VARCHAR(50) NOT NULL,
-   npa INT NOT NULL,
-   localite VARCHAR(50) NOT NULL,
-   PRIMARY KEY(adresse_id)
+CREATE TABLE t_adresse (
+    adresse_id INT PRIMARY KEY NOT NULL,
+    client_fk INT NOT NULL,
+    rue VARCHAR(255) NOT NULL,
+    npa INT NOT NULL,
+    localite VARCHAR(100) NOT NULL,
+    zone_fk INT NULL,
+    latitude FLOAT NULL,
+    longitude FLOAT NULL,
+    FOREIGN KEY (client_fk) REFERENCES t_client(client_id)
 );
 
-CREATE TABLE t_article(
-   article_id INT,
-   type VARCHAR(50) NOT NULL,
-   nom VARCHAR(50) NOT NULL,
-   prix_ttc DECIMAL(15,2) NOT NULL,
-   tva DECIMAL(15,2) NOT NULL,
-   actif LOGICAL NOT NULL,
-   PRIMARY KEY(article_id)
+CREATE TABLE t_article (
+    article_id INT PRIMARY KEY NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    prix_ttc DECIMAL(10,2) NOT NULL,
+    tva DECIMAL(4,2) NOT NULL,
+    actif TINYINT NOT NULL
 );
 
-CREATE TABLE t_livreur(
-   livreur_id INT,
-   code VARCHAR(50) NOT NULL,
-   nom VARCHAR(50) NOT NULL,
-   actif LOGICAL NOT NULL,
-   PRIMARY KEY(livreur_id)
+CREATE TABLE t_livreur (
+    livreur_id INT PRIMARY KEY NOT NULL,
+    code VARCHAR(10) NOT NULL UNIQUE,
+    nom VARCHAR(100) NOT NULL,
+    actif TINYINT NOT NULL
 );
 
-CREATE TABLE t_commande(
-   commande_id INT,
-   type VARCHAR(50) NOT NULL,
-   date_creation DATETIME NOT NULL,
-   statut VARCHAR(50) NOT NULL,
-   adresse_livraison_fk INT NOT NULL,
-   PRIMARY KEY(commande_id),
-   FOREIGN KEY(adresse_livraison_fk) REFERENCES t_adresse(adresse_id)
+CREATE TABLE t_commande (
+    commande_id INT PRIMARY KEY NOT NULL,
+    client_fk INT NOT NULL,
+    type ENUM('livraison', 'emporter', 'sur_place') NOT NULL,
+    adresse_livraison_fk INT NULL,
+    date_creation DATETIME NOT NULL,
+    statut VARCHAR(50) NOT NULL,
+    FOREIGN KEY (client_fk) REFERENCES t_client(client_id),
+    FOREIGN KEY (adresse_livraison_fk) REFERENCES t_adresse(adresse_id)
 );
 
-CREATE TABLE t_ligne_commande(
-   ligne_commande_id INT,
-   quantite INT NOT NULL,
-   prix_unitaire DECIMAL(15,2) NOT NULL,
-   parent_ligne_fk INT,
-   PRIMARY KEY(ligne_commande_id),
-   FOREIGN KEY(parent_ligne_fk) REFERENCES t_ligne_commande(ligne_commande_id)
+CREATE TABLE t_ligne_commande (
+    ligne_id INT PRIMARY KEY NOT NULL,
+    commande_fk INT NOT NULL,
+    article_fk INT NOT NULL,
+    quantite INT NOT NULL,
+    prix_unitaire DECIMAL(10,2) NOT NULL,
+    parent_ligne_fk INT NULL,
+    FOREIGN KEY (commande_fk) REFERENCES t_commande(commande_id),
+    FOREIGN KEY (article_fk) REFERENCES t_article(article_id),
+    FOREIGN KEY (parent_ligne_fk) REFERENCES t_ligne_commande(ligne_id)
 );
 
-CREATE TABLE t_paiement(
-   paiement_id INT,
-   mode VARCHAR(50) NOT NULL,
-   montant DECIMAL(15,2) NOT NULL,
-   date_paiement DATETIME NOT NULL,
-   PRIMARY KEY(paiement_id)
+CREATE TABLE t_paiement (
+    paiement_id INT PRIMARY KEY NOT NULL,
+    commande_fk INT NOT NULL,
+    mode VARCHAR(20) NOT NULL,
+    montant DECIMAL(10,2) NOT NULL,
+    date_paiement DATETIME NOT NULL,
+    FOREIGN KEY (commande_fk) REFERENCES t_commande(commande_id)
 );
 
-CREATE TABLE t_livraison(
-   livraison_id INT,
-   statut VARCHAR(50) NOT NULL,
-   date_depart DATETIME NOT NULL,
-   date_arrivee DATETIME NOT NULL,
-   commande_fk INT NOT NULL,
-   PRIMARY KEY(livraison_id),
-   UNIQUE(commande_fk),
-   FOREIGN KEY(commande_fk) REFERENCES t_commande(commande_id)
-);
-
-CREATE TABLE possède(
-   client_fk INT,
-   adresse_id INT,
-   PRIMARY KEY(client_fk, adresse_id),
-   FOREIGN KEY(client_fk) REFERENCES t_client (client_id),
-   FOREIGN KEY(adresse_id) REFERENCES t_adresse(adresse_id)
-);
-
-CREATE TABLE effectuer(
-   client_fk INT,
-   commande_id INT,
-   PRIMARY KEY(client_fk, commande_id),
-   FOREIGN KEY(client_fk) REFERENCES t_client (client_id),
-   FOREIGN KEY(commande_id) REFERENCES t_commande(commande_id)
-);
-
-CREATE TABLE contenir(
-   commande_fk INT,
-   ligne_commande_id INT,
-   PRIMARY KEY(commande_fk, ligne_commande_id),
-   FOREIGN KEY(commande_fk) REFERENCES t_commande(commande_id),
-   FOREIGN KEY(ligne_commande_id) REFERENCES t_ligne_commande(ligne_commande_id)
-);
-
-CREATE TABLE concerner(
-   article_fk INT,
-   ligne_commande_id INT,
-   PRIMARY KEY(article_fk, ligne_commande_id),
-   FOREIGN KEY(article_fk) REFERENCES t_article(article_id),
-   FOREIGN KEY(ligne_commande_id) REFERENCES t_ligne_commande(ligne_commande_id)
-);
-
-CREATE TABLE payer(
-   commande_fk INT,
-   paiement_id INT,
-   PRIMARY KEY(commande_fk, paiement_id),
-   FOREIGN KEY(commande_fk) REFERENCES t_commande(commande_id),
-   FOREIGN KEY(paiement_id) REFERENCES t_paiement(paiement_id)
-);
-
-CREATE TABLE gèrer(
-   livreur_fk INT,
-   livraison_id INT,
-   PRIMARY KEY(livreur_fk, livraison_id),
-   FOREIGN KEY(livreur_fk) REFERENCES t_livreur(livreur_id),
-   FOREIGN KEY(livraison_id) REFERENCES t_livraison(livraison_id)
+CREATE TABLE t_livraison (
+    livraison_id INT PRIMARY KEY NOT NULL,
+    commande_fk INT NOT NULL,
+    livreur_fk VARCHAR(10) NOT NULL,
+    statut VARCHAR(20) NOT NULL,
+    date_depart DATETIME NULL,
+    date_arrivee DATETIME NULL,
+    FOREIGN KEY (commande_fk) REFERENCES t_commande(commande_id),
+    FOREIGN KEY (livreur_fk) REFERENCES t_livreur(code)
 );
