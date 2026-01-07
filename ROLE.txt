@@ -1,35 +1,42 @@
-
+-- Création des rôles
 CREATE ROLE 'r_admin';
-CREATE ROLE 'r_gerant';
+CREATE ROLE 'r_manager';
+CREATE ROLE 'r_pizzaiolo';
 CREATE ROLE 'r_livreur';
-CREATE ROLE 'r_client';
+CREATE ROLE 'r_agent_caisse';
+CREATE ROLE 'r_analyste';
 
-GRANT ALL PRIVILEGES ON pizzeria_db.* TO 'r_admin';
 
-GRANT INSERT, UPDATE, DELETE, SELECT ON pizzeria_db.t_article TO 'r_gerant';
-GRANT INSERT, UPDATE, DELETE, SELECT ON pizzeria_db.t_livreur TO 'r_gerant';
+GRANT ALL PRIVILEGES ON *.* TO 'r_admin' WITH GRANT OPTION;
 
-GRANT SELECT ON pizzeria_db.t_commande TO 'r_gerant';
-GRANT SELECT ON pizzeria_db.t_ligne_commande TO 'r_gerant';
-GRANT SELECT ON pizzeria_db.t_paiement TO 'r_gerant';
-GRANT SELECT ON pizzeria_db.t_client TO 'r_gerant';
-GRANT SELECT ON pizzeria_db.t_livraison TO 'r_gerant';
-GRANT SELECT ON pizzeria_db.t_adresse TO 'r_gerant';
+GRANT ALL PRIVILEGES ON pizzeria_db.t_article TO 'r_manager';
+
+GRANT SELECT, INSERT, UPDATE ON pizzeria_db.t_commande TO 'r_manager';
+GRANT SELECT, INSERT, UPDATE, DELETE ON pizzeria_db.t_ligne_commande TO 'r_manager';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON pizzeria_db.t_livraison TO 'r_manager';
+GRANT SELECT ON pizzeria_db.t_livreur TO 'r_manager'; 
+
+GRANT SELECT ON pizzeria_db.t_paiement TO 'r_manager';
+
+GRANT SELECT ON pizzeria_db.t_commande TO 'r_pizzaiolo';
+GRANT SELECT ON pizzeria_db.t_ligne_commande TO 'r_pizzaiolo';
+
+GRANT UPDATE (statut) ON pizzeria_db.t_commande TO 'r_pizzaiolo';
+
+GRANT SELECT ON pizzeria_db.t_article TO 'r_pizzaiolo';
 
 GRANT SELECT ON pizzeria_db.t_livraison TO 'r_livreur';
 GRANT SELECT ON pizzeria_db.t_adresse TO 'r_livreur';
-GRANT SELECT ON pizzeria_db.t_client TO 'r_livreur'; 
+GRANT SELECT (nom, prenom, telephone) ON pizzeria_db.t_client TO 'r_livreur';
 
 GRANT UPDATE (statut, date_arrivee) ON pizzeria_db.t_livraison TO 'r_livreur';
 
-GRANT SELECT ON pizzeria_db.t_article TO 'r_client';
+GRANT SELECT ON pizzeria_db.t_commande TO 'r_agent_caisse';
 
-GRANT INSERT, SELECT, UPDATE ON pizzeria_db.t_client TO 'r_client';
-GRANT INSERT, SELECT, UPDATE ON pizzeria_db.t_adresse TO 'r_client';
+GRANT SELECT, INSERT, UPDATE ON pizzeria_db.t_paiement TO 'r_agent_caisse';
 
-GRANT INSERT ON pizzeria_db.t_commande TO 'r_client';
-GRANT INSERT ON pizzeria_db.t_ligne_commande TO 'r_client';
-GRANT INSERT ON pizzeria_db.t_paiement TO 'r_client';
-GRANT INSERT ON pizzeria_db.t_livraison TO 'r_client'; 
+GRANT SELECT ON pizzeria_db.* TO 'r_analyste';
 
+-- Appliquer les privilèges
 FLUSH PRIVILEGES;
