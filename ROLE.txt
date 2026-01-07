@@ -38,5 +38,5 @@ GRANT SELECT, INSERT, UPDATE ON pizzeria_db.t_paiement TO 'r_agent_caisse';
 
 GRANT SELECT ON pizzeria_db.* TO 'r_analyste';
 
--- Appliquer les privilèges
 FLUSH PRIVILEGES;
+
