@@ -1,8 +1,0 @@
-LOAD DATA LOCAL INFILE 'var\lib\mysql-files\scripts\t_client.tsv'
-INTO TABLE t_client
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n'
-
-IGNORE 1 LINES;
-
-
