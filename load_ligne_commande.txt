@@ -1,7 +1,0 @@
-LOAD DATA LOCAL INFILE 'C:\\Users\\pi86xqa\\Downloads\\samples_data\\samples_data\\t_ligne_commande.tsv'
-INTO TABLE t_ligne_commande
-FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n'
-IGNORE 1 LINES
-(ligne_id, commande_fk, article_fk, quantite, prix_unitaire, @v_parent)
-SET parent_ligne_fk = NULLIF(@v_parent, '');
