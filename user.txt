@@ -1,0 +1,26 @@
+
+CREATE USER 'admin_sys'@'localhost' IDENTIFIED BY 'gant_de_l_infinie';
+GRANT 'r_admin' TO 'admin_sys'@'localhost';
+SET DEFAULT ROLE 'r_admin' TO 'admin_sys'@'localhost';
+
+CREATE USER 'manager_julie'@'localhost' IDENTIFIED BY 'Pierre_de_l_espace';
+GRANT 'r_manager' TO 'manager_julie'@'localhost';
+SET DEFAULT ROLE 'r_manager' TO 'manager_julie'@'localhost';
+
+CREATE USER 'pizza_mario'@'localhost' IDENTIFIED BY 'Pierre_de_l_esprit';
+GRANT 'r_pizzaiolo' TO 'pizza_mario'@'localhost';
+SET DEFAULT ROLE 'r_pizzaiolo' TO 'pizza_mario'@'localhost';
+
+CREATE USER 'livreur_karim'@'localhost' IDENTIFIED BY 'Pierre_de_la_realite';
+GRANT 'r_livreur' TO 'livreur_karim'@'localhost';
+SET DEFAULT ROLE 'r_livreur' TO 'livreur_karim'@'localhost';
+
+CREATE USER 'caisse_laura'@'localhost' IDENTIFIED BY 'Pierre_du_pouvoir';
+GRANT 'r_agent_caisse' TO 'caisse_laura'@'localhost';
+SET DEFAULT ROLE 'r_agent_caisse' TO 'caisse_laura'@'localhost';
+
+CREATE USER 'analyste_bob'@'localhost' IDENTIFIED BY 'Pierre_du_Temps';
+GRANT 'r_analyste' TO 'analyste_bob'@'localhost';
+SET DEFAULT ROLE 'r_analyste' TO 'analyste_bob'@'localhost';
+
+FLUSH PRIVILEGES;
