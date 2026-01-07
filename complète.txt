@@ -1,0 +1,1 @@
+mysqldump -u root -p --databases pizzeria_db > backup_différentiel.sql
