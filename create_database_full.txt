@@ -84,32 +84,32 @@ CREATE TABLE t_paiement (
     FOREIGN KEY (commande_fk) REFERENCES t_commande(commande_id)
 );
 
-LOAD DATA LOCAL INFILE 'var\lib\mysql-files\scripts\t_client.tsv'
+LOAD DATA INFILE '/var/lib/mysql-files/t_client.tsv'
 INTO TABLE t_client
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
 
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE 'var\lib\mysql-files\scripts\t_livreur.tsv'
+LOAD DATA INFILE '/var/lib/mysql-files/t_livreur.tsv'
 INTO TABLE t_livreur
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE 'C:\\Users\\pi86xqa\\Downloads\\samples_data\\samples_data\\t_article.tsv'
+LOAD DATA INFILE '/var/lib/mysql-files/t_article.tsv'
 INTO TABLE t_article
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE 'C:\\Users\\pi86xqa\\Downloads\\samples_data\\samples_data\\t_adresse.tsv'
+LOAD DATA INFILE '/var/lib/mysql-files/t_adresse.tsv'
 INTO TABLE t_adresse
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE 'C:\\Users\\pi86xqa\\Downloads\\samples_data\\samples_data\\t_commande.tsv'
+LOAD DATA INFILE '/var/lib/mysql-files/t_commande.tsv'
 INTO TABLE t_commande
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -117,13 +117,13 @@ IGNORE 1 LINES
 (commande_id, client_fk, type, @v_adresse, date_creation, statut)
 SET adresse_livraison_fk = NULLIF(@v_adresse, '');
 
-LOAD DATA LOCAL INFILE 'C:\\Users\\pi86xqa\\Downloads\\samples_data\\samples_data\\t_livraison.tsv'
+LOAD DATA INFILE '/var/lib/mysql-files/t_livraison.tsv'
 INTO TABLE t_livraison
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE 'C:\\Users\\pi86xqa\\Downloads\\samples_data\\samples_data\\t_ligne_commande.tsv'
+LOAD DATA INFILE '/var/lib/mysql-files/t_ligne_commande.tsv'
 INTO TABLE t_ligne_commande
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -131,7 +131,7 @@ IGNORE 1 LINES
 (ligne_id, commande_fk, article_fk, quantite, prix_unitaire, @v_parent)
 SET parent_ligne_fk = NULLIF(@v_parent, '');
 
-LOAD DATA LOCAL INFILE 'C:\\Users\\pi86xqa\\Downloads\\samples_data\\samples_data\\t_paiement.tsv'
+LOAD DATA INFILE '/var/lib/mysql-files/t_paiement.tsv'
 INTO TABLE t_paiement
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
