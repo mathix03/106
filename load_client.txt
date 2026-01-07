@@ -1,7 +1,8 @@
-LOAD DATA LOCAL INFILE 'C:\Users\pi86xqa\Downloads\Docker_MySQL\scripts\t_client.tsv'
+LOAD DATA LOCAL INFILE 'var\lib\mysql-files\scripts\t_client.tsv'
 INTO TABLE t_client
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
 
 IGNORE 1 LINES;
+
 
