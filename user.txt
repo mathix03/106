@@ -24,7 +24,7 @@ GRANT 'r_analyste' TO 'analyste_bob'@'localhost';
 SET DEFAULT ROLE 'r_analyste' TO 'analyste_bob'@'localhost';
 
 CREATE USER 'analyste_Tony'@'localhost' IDENTIFIED BY 'Pierre_de_l_ame';
-GRANT 'r_analyste' TO 'analyste_bob'@'localhost';
-SET DEFAULT ROLE 'r_analyste' TO 'analyste_bob'@'localhost';
+GRANT 'r_analyste' TO 'analyste_Tony'@'localhost';
+SET DEFAULT ROLE 'r_analyste' TO 'analyste_Tony'@'localhost';
 
 FLUSH PRIVILEGES;
